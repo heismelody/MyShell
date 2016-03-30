@@ -4,5 +4,5 @@
 
 touch test
 cp ./test /home/tux/Documents/
-mv /home/tux/Documents/a /home/tux/Documents/shellstudy/
-rm /home/tux/Documents/shellstudy/a
+mv /home/tux/Documents/test /home/tux/Documents/shellstudy/
+rm /home/tux/Documents/shellstudy/test
