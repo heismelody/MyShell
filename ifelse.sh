@@ -41,3 +41,38 @@ else
 	fi
 fi
 
+
+if [ $1 -eq 1 ];then
+    echo "Monday"
+elif [ $1 -eq 2 ];then
+    echo "Tuesday"
+elif [ $1 -eq 3 ];then
+    echo "Wednesday"
+elif [ $1 -eq 4 ];then
+    echo "Thursday"
+elif [ $1 -eq 5 ];then
+    echo "Friday"
+elif [ $1 -eq 6 ];then
+    echo "Saturady"
+elif [ $1 -eq 7 ];then
+    echo "Sunday"
+fi
+
+case "$1" in
+1)
+    echo "Monday";;
+2)
+    echo "Tuesday";;
+3)
+    echo "Wednesday";;
+4)
+    echo "Thursday";;
+5)
+    echo "Fridary";;
+6)
+    echo "Saturday";;
+7)
+    echo "Sunday";;
+*)
+    echo "Not  in 1-7"
+esac
