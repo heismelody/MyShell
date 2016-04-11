@@ -34,6 +34,7 @@ create_file()
         read OPTION
         case $OPTION in
             [Yy]*)
+                echo "Please enter the file name:"
                 read FILEINPUT
                 FILE=$FILEINPUT
                 if [ -e $FILE ];then
@@ -49,17 +50,33 @@ create_file()
     esac
 }
 
-#######################
-#read arg
-read_arg()
+########################
+#search opreation
+search()
 {
+    if [ $1 != ""];then
+        sed -n "/$1/p" $FILE
+    else
+        echo "Input error"
+    fi
 }
 
 ########################
-#search op
-search()
+#add operation
+add()
 {
+    if [ $1 != "" ];then
+        echo "Name [$1] Phone [$2] Email [$3]"  >> $FILE
+    fi
+}
 
+#######################
+#remove operation
+remove()
+{
+    if [ $1 != "" ];then
+        sed "/$1/d" $FILE
+    fi
 }
 
 ########################
@@ -67,4 +84,43 @@ search()
 #
  
 create_file
-read_arg
+echo "What do you want to do:search/add/remove/(q to exit)"
+read arg
+while [ $arg != "q" ]
+do
+    case $arg in
+    search )
+        echo "Please input name:(press q to quit)"
+        read NAME
+        while [ $NAME != "q" ]
+        do
+            search $NAME
+            read NAME
+        done
+        echo "What do you want to do:search/add/remove/(q to exit)"
+        read arg
+    ;;
+    add )
+        echo "Please input name phone email:(press q to quit)"
+        read NAME PHONE EMAIL
+        while [ $NAME != "q" ]
+        do 
+            add $NAME $PHONE $EMAIL
+            read NAME PHONE EMAIL
+        done
+        echo "What do you want to do:search/add/remove/(q to exit)"
+        read arg
+    ;;
+    remove )
+        echo "Please input the name you want to remove:(press q to quit)"
+        read NAME
+        while [ $NMAE != "q" ]
+        do
+            remove $NAME
+            read NAME
+        done
+        echo "What do you want to do:search/add/remove/(q to exit)"  
+        read arg
+    ;;
+    esac
+done
