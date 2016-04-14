@@ -1,0 +1,65 @@
+#!/bin/bash
+######################################################################
+#Name:testpw
+#Descriptiom:This script is to check passwords.The object 
+#is to flag weak and easily guessed password.
+#To be considered acceptable,a password must meet the following minimun
+#qualifications:
+#'1.Minimum length of 8 character
+#'2.Must contain at least one numeric character
+#'3.Must contain at least one of the following non-alphabetic characters:
+# @,#,$,%,&,*,+,-,=
+#Optional:
+#'Enable to check all the passwords on this system in /etc/passwd
+#######################################################################
+
+echo "Please enter your password you want to check:"
+echo " password must meet the following minimun qualifications:
+        'Minimum length of 8 character
+        'Must contain at least one numeric character
+        'Must contain at least one of the following non-alphabetic characters:"
+
+read PASSWORD
+
+#########################
+#qualification2,3
+#NUMBER:count the number of numbers in the password
+#ALPHA:count the number of non-alphabtic characters in the password
+NUMBER=`grep -o "[0-9]" <<<"$PASSWORD" | wc -l`
+ALPHA=`grep -o "[@#$%*&+-=]" <<<"$PASSWORD" | wc -l`
+
+#if number=null,let number=0
+#if alpha=NULL,let alpha=0
+if [ -z $NUMBER ];then 
+   let "$NUMBER=0"
+fi
+
+if [ -z $ALPHA ];then
+   let "$ALPHA=0"
+fi
+
+##########################
+#main script
+#
+while [ ${#PASSWORD} -lt 8 ] || [ $NUMBER -lt 1 ] || [ $ALPHA -lt 1 ]
+do
+    echo " password must meet the following minimun qualifications:
+        'Minimum length of 8 character
+        'Must contain at least one numeric character
+        'Must contain at least one of the following non-alphabetic characters:"
+    read PASSWORD
+
+    #re init the args
+    NUMBER=`grep -o "[0-9]" <<<"$PASSWORD" | wc -l`
+    ALPHA=`grep -o "[@#$%*&+-=]" <<<"$PASSWORD" | wc -l`
+
+    if [ -z $NUMBER ];then
+       let "$NUMBER=0"
+    fi
+
+    if [ -z $ALPHA ];then
+       let "$ALPHA=0"
+    fi
+
+done
+echo "Your password is:$PASSWORD"
