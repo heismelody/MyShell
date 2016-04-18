@@ -2,13 +2,18 @@
 ####################################################
 #Name : stripcomment.sh
 #Description: strip out the comment in the input file
-#the #! line should not be stripped out
+#the #! line should not be stripped out.
 #####################################################
+#Note:this script doesnt operate on the origin file,
+#so if you want to strip out the comment,copy the 
+#output to your origin file.
+####################################################
 
 $OPT
 
 #####################################
 #check if the file is existing
+#
 check_file()
 {
     if [ ! -f $1 ];then
@@ -22,6 +27,7 @@ check_file()
 
 ######################################
 #print out to screen the comment of the input file
+#
 print_file_comment()
 {
     if [ $# -eq 1 ];then
@@ -31,6 +37,7 @@ print_file_comment()
 
 #######################################
 #check the option is yes or no
+#
 check_option()
 {
     case $1 in
@@ -48,6 +55,7 @@ check_option()
 
 #######################################
 #main
+#
 if [ $# -eq 1 ];then
     check_file $1
     print_file_comment $1
@@ -56,8 +64,7 @@ if [ $# -eq 1 ];then
     read OPT
     check_option $OPT
     if [ $OPT -eq 1 ];then
- ##########not finished
-        sed -e 's/^#|^[^#!]/a/' $1
+        sed -e '/^#!/p' -e '/^#/d' $1 | less
     fi    
 else
     echo "Usage:$0 filename"
