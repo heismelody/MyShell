@@ -1,0 +1,31 @@
+#!/bin/bash
+
+##################################
+#Note:this is not a bash script!
+##################################
+
+#1Question:print the null line's line number of 'file'
+sed -n '/^$/=' file
+
+#2:print the line ending with abc
+grep abc$ file
+
+#3:print from the 1st line to 3rd line
+sed -n '1,3p' file
+or
+head -3 file
+
+#4:move the file in /usr/local/test larger than 100K to /tmp
+
+#!/bin/bash
+for file in `ls /usr/local/test`
+do
+    if [ -f $file ];then
+        if [ `ls -l $file | awk '{print $5}'` -gt 100000 ];then
+            mv $file /tmp/
+        fi 
+    fi
+done
+
+#5:local host:192.168.2.1,redirect the packets from port 80 to port 8080
+sudo iptables -t nat -A PREROUTING -p tcp --dst 192.168.2.1 --dport 80 -j REDIRECT --to-port 8080
